@@ -17,6 +17,8 @@ Copyright (c) 2024 Shane Scott
 """
 
 import re
+import traceback
+
 from PyQt6 import QtWidgets, QtGui, QtCore
 
 from app.ModelHelpers import resolveHeaders, itemInteractive
@@ -132,7 +134,8 @@ class ProcessesTableModel(QtCore.QAbstractTableModel):
         ## Extra?
         #self.__controller.updateProcessesIcon()  # to make sure the progress GIF is displayed in the right place
             self.layoutChanged.emit()
-        except:
+        except Exception as e:
+            traceback.print_exc()
             log.error("Failed to sort")
             pass
 

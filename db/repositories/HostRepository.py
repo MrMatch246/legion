@@ -53,7 +53,7 @@ class HostRepository:
                  "WHERE services.name=:service_name")
         query += applyFilters(filters)
         query = text(query)
-        result = session.execute(query, {'service_name': str(service_name)}).fetchall()
+        result = session.execute(query, {'service_name': str(service_name)}).mappings().all()
         session.close()
         return result
 
