@@ -36,7 +36,7 @@ class HostRepository:
 
     def getHosts(self, filters):
         session = self.dbAdapter.session()
-        query = 'SELECT * FROM hostObj AS hosts'
+        query = 'SELECT * FROM hostObj AS hosts WHERE 1=1'
         query += applyHostsFilters(filters)
         query = text(query)
         print(query)
