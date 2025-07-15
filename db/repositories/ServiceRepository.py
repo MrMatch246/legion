@@ -34,7 +34,7 @@ class ServiceRepository:
         query += applyFilters(filters)
         query += ' ORDER BY service.name ASC'
         query = text(query)
-        result = session.execute(query).fetchall()
+        result = session.execute(query).mappings().all()
         session.close()
         return result
 
