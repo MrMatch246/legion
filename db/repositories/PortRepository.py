@@ -38,7 +38,7 @@ class PortRepository:
     def getPortStatesByHostId(self, host_id):
         session = self.dbAdapter.session()
         query = text('SELECT port.state FROM portObj as port WHERE port.hostId = :host_id')
-        result = session.execute(query, {'host_id': str(host_id)}).mappings().all()
+        result = session.execute(query, {'host_id': str(host_id)}).fetchall()
         session.close()
         return result
 
