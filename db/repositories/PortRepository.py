@@ -38,19 +38,23 @@ class PortRepository:
     def getPortStatesByHostId(self, host_id):
         session = self.dbAdapter.session()
         query = text('SELECT port.state FROM portObj as port WHERE port.hostId = :host_id')
-        result = session.execute(query, {'host_id': str(host_id)}).fetchall()
+        result = session.execute(query, {'host_id': str(host_id)}).mappings().all()
         session.close()
         return result
 
     def getPortsAndServicesByHostIP(self, host_ip, filters):
         session = self.dbAdapter.session()
-        query = ("SELECT hosts.ip, ports.portId, ports.protocol, ports.state, ports.hostId, ports.serviceId, "
-                 "services.name, services.product, services.version, services.extrainfo, services.fingerprint "
-                 "FROM portObj AS ports INNER JOIN hostObj AS hosts ON hosts.id = ports.hostId "
-                 "LEFT OUTER JOIN serviceObj AS services ON services.id = ports.serviceId WHERE hosts.ip = :host_ip")
+        query = (
+            "SELECT hosts.ip, ports.portId, ports.protocol, ports.state, ports.hostId, ports.serviceId, "
+            "services.name, services.product, services.version, services.extrainfo, services.fingerprint "
+            "FROM portObj AS ports "
+            "INNER JOIN hostObj AS hosts ON hosts.id = ports.hostId "
+            "LEFT OUTER JOIN serviceObj AS services ON services.id = ports.serviceId "
+            "WHERE hosts.ip = :host_ip"
+        )
         query += applyPortFilters(filters)
         query = text(query)
-        result = session.execute(query, {'host_ip': str(host_ip)}).fetchall()
+        result = session.execute(query, {'host_ip': str(host_ip)}).mappings().all()
         session.close()
         return result
 
