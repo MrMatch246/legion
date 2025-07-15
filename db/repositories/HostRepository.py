@@ -40,6 +40,7 @@ class HostRepository:
         query += applyHostsFilters(filters)
         query = text(query)
         print(query)
+        print(session.query(hostObj))
         result = session.execute(query).fetchall()
         session.close()
         return result
