@@ -119,8 +119,6 @@ class ProcessesTableModel(QtCore.QAbstractTableModel):
                         array.append(int(self.__processes[i]['port']))
             else:
                 for i in range(len(self.__processes)):
-                    print(self.__processes[i])
-                    print(field)
                     array.append(self.__processes[i][field])
         
             sortArrayWithArray(array, self.__processes)  # sort the services based on the values in the array
@@ -138,7 +136,6 @@ class ProcessesTableModel(QtCore.QAbstractTableModel):
             self.layoutChanged.emit()
         except Exception as e:
             traceback.print_exc()
-            print(e)
             log.error("Failed to sort")
             pass
 
