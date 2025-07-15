@@ -38,23 +38,40 @@ class ProcessRepository:
     # we are using the same model to display process information everywhere)
 
     def getProcesses(self, filters, showProcesses: Union[str, bool] = 'noNmap', sort: str = 'desc', ncol: str = 'id'):
-        # we do not fetch nmap processes because these are not displayed in the host tool tabs / tools
+
         session = self.dbAdapter.session()
+
         if showProcesses == 'noNmap':
-            query = text('SELECT "0", "0", "0", process.name, "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0" '
-                         'FROM process AS process WHERE process.closed = "False" AND process.name != "nmap" '
-                         'GROUP BY process.name')
-            result = session.execute(query).fetchall()
+            query = text(
+                'SELECT "0" AS id, "0" AS hostIp, "0" AS tabTitle, process.name AS name, "0" AS outputfile, '
+                '"0" AS output, "0" AS pid, "0" AS command, "0" AS display, "0" AS closed, '
+                '"0" AS startTime, "0" AS endTime, "0" AS status, "0" AS type, "0" AS path '
+                'FROM process AS process '
+                'WHERE process.closed = "False" AND process.name != "nmap" '
+                'GROUP BY process.name'
+            )
+            result = session.execute(query).mappings().all()
+
         elif not showProcesses:
-            query = text('SELECT process.id, process.hostIp, process.tabTitle, process.outputfile, output.output '
-                         'FROM process AS process INNER JOIN process_output AS output ON process.id = output.processId '
-                         'WHERE process.display = :display AND process.closed = "False" order by process.id desc')
-            result = session.execute(query, {'display': str(showProcesses)}).fetchall()
+            query = text(
+                'SELECT process.id, process.hostIp, process.tabTitle, process.outputfile, output.output '
+                'FROM process AS process '
+                'INNER JOIN process_output AS output ON process.id = output.processId '
+                'WHERE process.display = :display AND process.closed = "False" '
+                'ORDER BY process.id DESC'
+            )
+            result = session.execute(query, {'display': str(showProcesses)}).mappings().all()
+
         else:
-            query = text('SELECT * FROM process AS process WHERE process.display=:display order by {0} {1}'.format(ncol, sort))
-            result = session.execute(query, {'display': str(showProcesses)}).fetchall()
+            query = text(
+                'SELECT * FROM process AS process WHERE process.display = :display '
+                f'ORDER BY {ncol} {sort}'
+            )
+            result = session.execute(query, {'display': str(showProcesses)}).mappings().all()
+
         session.close()
         return result
+
 
     def storeProcess(self, proc):
         session = self.dbAdapter.session()

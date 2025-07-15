@@ -120,6 +120,7 @@ class ProcessesTableModel(QtCore.QAbstractTableModel):
             else:
                 for i in range(len(self.__processes)):
                     print(self.__processes[i])
+                    print(field)
                     array.append(self.__processes[i][field])
         
             sortArrayWithArray(array, self.__processes)  # sort the services based on the values in the array
