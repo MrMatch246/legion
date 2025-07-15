@@ -137,6 +137,7 @@ class HostsTableModel(QtCore.QAbstractTableModel):
         if Ncol == 0 or Ncol == 3:                                      # if sorting by IP address (and by default)
             log.debug("__hosts: {0}".format(str(self.__hosts)))
             for i in range(len(self.__hosts)):
+                print(self.__hosts)
                 array.append(IP2Int(self.__hosts[i]['ip']))
 
         elif Ncol == 1:                                                 # if sorting by OS
