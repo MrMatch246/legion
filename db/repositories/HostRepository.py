@@ -41,6 +41,7 @@ class HostRepository:
         query = text(query)
         result = session.execute(query).fetchall()
         session.close()
+        print(result)
         return result
 
     def getHostsAndPortsByServiceName(self, service_name, filters: Filters):
