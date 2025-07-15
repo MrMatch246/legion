@@ -40,7 +40,7 @@ xorgHost=$(echo $DISPLAY | sed 's/:.*//')
 
 # Check if the Xorg port is open
 nc -zv $xorgHost 6000 &> /dev/null
-if [ $? -ne 0 ]; then
+if [ $? -ne 1 ]; then
     echo "Cannot reach the X server at $xorgHost:6000. Please check your X server configuration and verify your DISPLAY variable has been exported correctly."
     checkWsl
     exit 1
