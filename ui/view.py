@@ -1220,6 +1220,7 @@ class View(QtCore.QObject):
                 counterOpen = counterClosed = counterFiltered = 0
 
                 for s in states:
+                    print(s)
                     if s[0] == 'open':
                         counterOpen+=1
                     elif s[0] == 'closed':
