@@ -36,12 +36,12 @@ class HostRepository:
 
     def getHosts(self, filters):
         session = self.dbAdapter.session()
-        query = 'SELECT * FROM hostObj AS hosts WHERE 1=1'
+        query = 'SELECT * FROM hostObj AS hosts'
         query += applyHostsFilters(filters)
         query = text(query)
+        print(query)
         result = session.execute(query).fetchall()
         session.close()
-        print(result)
         return result
 
     def getHostsAndPortsByServiceName(self, service_name, filters: Filters):
