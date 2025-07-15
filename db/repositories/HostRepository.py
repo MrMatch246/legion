@@ -39,9 +39,7 @@ class HostRepository:
         query = 'SELECT * FROM hostObj AS hosts WHERE 1=1'
         query += applyHostsFilters(filters)
         query = text(query)
-        print(query)
-        print(session.query(hostObj))
-        result = session.execute(query).fetchall()
+        result = session.execute(query).mappings().all()
         session.close()
         return result
 
