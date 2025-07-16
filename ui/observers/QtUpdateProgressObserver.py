@@ -15,40 +15,24 @@ Copyright (c) 2024 Shane Scott
 
 Author(s): Shane Scott (sscott@shanewilliamscott.com), Dmitriy Dubson (d.dubson@gmail.com)
 """
-from PyQt6.QtCore import QObject, pyqtSignal
 from app.actions.updateProgress.AbstractUpdateProgressObserver import AbstractUpdateProgressObserver
 from ui.ancillaryDialog import ProgressWidget
 
+from PyQt6.QtCore import QMetaObject, Qt
 
-class QtUpdateProgressObserver(QObject, AbstractUpdateProgressObserver):
-    startSignal = pyqtSignal()
-    finishSignal = pyqtSignal()
-    progressSignal = pyqtSignal(int, str)
-
+class QtUpdateProgressObserver(AbstractUpdateProgressObserver):
     def __init__(self, progressWidget: ProgressWidget):
-        super().__init__()
         self.progressWidget = progressWidget
-        self.startSignal.connect(self._onStart)
-        self.finishSignal.connect(self._onFinished)
-        self.progressSignal.connect(self._onProgressUpdate)
 
     def onStart(self) -> None:
-        self.startSignal.emit()
+        QMetaObject.invokeMethod(self.progressWidget, "show", Qt.ConnectionType.QueuedConnection)
 
     def onFinished(self) -> None:
-        self.finishSignal.emit()
+        QMetaObject.invokeMethod(self.progressWidget, "hide", Qt.ConnectionType.QueuedConnection)
 
     def onProgressUpdate(self, progress: int, title: str) -> None:
-        self.progressSignal.emit(progress, title)
-
-    # Slots to run in main thread
-    def _onStart(self):
-        self.progressWidget.show()
-
-    def _onFinished(self):
-        self.progressWidget.hide()
-
-    def _onProgressUpdate(self, progress: int, title: str):
-        self.progressWidget.setText(title)
-        self.progressWidget.setProgress(progress)
-        self.progressWidget.show()
+        QMetaObject.invokeMethod(self.progressWidget, "setText", Qt.ConnectionType.QueuedConnection,
+                                 QtCore.Q_ARG(str, title))
+        QMetaObject.invokeMethod(self.progressWidget, "setProgress", Qt.ConnectionType.QueuedConnection,
+                                 QtCore.Q_ARG(int, progress))
+        QMetaObject.invokeMethod(self.progressWidget, "show", Qt.ConnectionType.QueuedConnection)

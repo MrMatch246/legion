@@ -53,10 +53,6 @@ class Controller:
         updateProgressObserver = QtUpdateProgressObserver(self.view.importProgressWidget)
         updateProgressObservable.attach(updateProgressObserver)
 
-        updateProgressObservable.progressChanged.connect(self.view.importProgressWidget.setProgress)
-        updateProgressObservable.started.connect(self.view.importProgressWidget.start)
-        updateProgressObservable.finishedSignal.connect(self.view.importProgressWidget.finish)
-
         self.initNmapImporter(updateProgressObservable)
         self.initPythonImporter()
         self.initScreenshooter()
