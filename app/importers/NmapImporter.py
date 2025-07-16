@@ -20,8 +20,6 @@ import sys
 from PyQt6 import QtCore
 
 from app.actions.updateProgress import AbstractUpdateProgressObservable
-from app.actions.updateProgress.UpdateProgressObservable import \
-    UpdateProgressObservable
 from app.logging.legionLog import getAppLogger
 from db.entities.host import hostObj
 from db.entities.l1script import l1ScriptObj
@@ -42,7 +40,7 @@ class NmapImporter(QtCore.QThread):
     schedule = QtCore.pyqtSignal(object, bool, name="schedule")  # New style signal
     log = QtCore.pyqtSignal(str, name="log")
 
-    def __init__(self, updateProgressObservable: UpdateProgressObservable, hostRepository: HostRepository):
+    def __init__(self, updateProgressObservable: AbstractUpdateProgressObservable, hostRepository: HostRepository):
         QtCore.QThread.__init__(self, parent=None)
         self.output = ''
         self.updateProgressObservable = updateProgressObservable

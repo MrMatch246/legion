@@ -15,21 +15,40 @@ Copyright (c) 2024 Shane Scott
 
 Author(s): Shane Scott (sscott@shanewilliamscott.com), Dmitriy Dubson (d.dubson@gmail.com)
 """
+from PyQt6.QtCore import QObject, pyqtSignal
 from app.actions.updateProgress.AbstractUpdateProgressObserver import AbstractUpdateProgressObserver
 from ui.ancillaryDialog import ProgressWidget
 
 
-class QtUpdateProgressObserver(AbstractUpdateProgressObserver):
+class QtUpdateProgressObserver(QObject, AbstractUpdateProgressObserver):
+    startSignal = pyqtSignal()
+    finishSignal = pyqtSignal()
+    progressSignal = pyqtSignal(int, str)
+
     def __init__(self, progressWidget: ProgressWidget):
+        super().__init__()
         self.progressWidget = progressWidget
+        self.startSignal.connect(self._onStart)
+        self.finishSignal.connect(self._onFinished)
+        self.progressSignal.connect(self._onProgressUpdate)
 
     def onStart(self) -> None:
-        self.progressWidget.show()
+        self.startSignal.emit()
 
     def onFinished(self) -> None:
-        self.progressWidget.hide()
+        self.finishSignal.emit()
 
     def onProgressUpdate(self, progress: int, title: str) -> None:
+        self.progressSignal.emit(progress, title)
+
+    # Slots to run in main thread
+    def _onStart(self):
+        self.progressWidget.show()
+
+    def _onFinished(self):
+        self.progressWidget.hide()
+
+    def _onProgressUpdate(self, progress: int, title: str):
         self.progressWidget.setText(title)
         self.progressWidget.setProgress(progress)
         self.progressWidget.show()
