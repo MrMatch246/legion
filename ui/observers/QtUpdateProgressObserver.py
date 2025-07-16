@@ -20,21 +20,19 @@ from PyQt6 import QtCore
 from app.actions.updateProgress.AbstractUpdateProgressObserver import AbstractUpdateProgressObserver
 from ui.ancillaryDialog import ProgressWidget
 
-from PyQt6.QtCore import QMetaObject, Qt
+from PyQt6.QtCore import QTimer
 
 class QtUpdateProgressObserver(AbstractUpdateProgressObserver):
     def __init__(self, progressWidget: ProgressWidget):
         self.progressWidget = progressWidget
 
     def onStart(self) -> None:
-        QMetaObject.invokeMethod(self.progressWidget, "show", Qt.ConnectionType.QueuedConnection)
+        QTimer.singleShot(0, self.progressWidget.show)
 
     def onFinished(self) -> None:
-        QMetaObject.invokeMethod(self.progressWidget, "hide", Qt.ConnectionType.QueuedConnection)
+        QTimer.singleShot(0, self.progressWidget.hide)
 
     def onProgressUpdate(self, progress: int, title: str) -> None:
-        QMetaObject.invokeMethod(self.progressWidget, "setText", Qt.ConnectionType.QueuedConnection,
-                                 QtCore.Q_ARG(str, title))
-        QMetaObject.invokeMethod(self.progressWidget, "setProgress", Qt.ConnectionType.QueuedConnection,
-                                 QtCore.Q_ARG(int, progress))
-        QMetaObject.invokeMethod(self.progressWidget, "show", Qt.ConnectionType.QueuedConnection)
+        QTimer.singleShot(0, lambda: self.progressWidget.setText(title))
+        QTimer.singleShot(0, lambda: self.progressWidget.setProgress(progress))
+        QTimer.singleShot(0, self.progressWidget.show)
