@@ -228,8 +228,10 @@ class NmapImporter(QtCore.QThread):
 
                 db_host = self.hostRepository.getHostInformation(h.ip)
                 if not db_host:
+                    print("AAAAAAAAAAAAAAAAAAAAAAAAA")
                     self.tsLog("            A host that should have been found was not. Something is wrong. Save your session and report a bug.")
                     self.tsLog("            Include your nmap file, sanitized if needed.")
+
 
                 if db_host.ipv4 == '' and not h.ipv4 == '':
                     db_host.ipv4 = h.ipv4

@@ -52,7 +52,9 @@ class ProgressWidget(QtWidgets.QDialog):
     def setProgress(self, progress):
         if progress > 100:
             progress = 100
-        self.progressBar.setValue(int(progress))
+        if self.progressBar.value() != int(progress):
+            self.progressBar.setValue(int(progress))
+
 
     def setText(self, text):
         self.text = text
