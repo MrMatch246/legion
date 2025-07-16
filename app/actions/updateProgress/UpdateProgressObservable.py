@@ -11,36 +11,22 @@ Copyright (c) 2024 Shane Scott
     details.
 
     You should have received a copy of the GNU General Public License along with this program.
-    If not, see <https://www.gnu.org/licenses/>.
+    If not, see <http://www.gnu.org/licenses/>.
 
 Author(s): Shane Scott (sscott@shanewilliamscott.com), Dmitriy Dubson (d.dubson@gmail.com)
 """
 from app.actions.updateProgress.AbstractUpdateProgressObservable import AbstractUpdateProgressObservable
 
 
-from PyQt6.QtCore import QObject, pyqtSignal
-
-class UpdateProgressObservable(QObject, AbstractUpdateProgressObservable):
-    progressChanged = pyqtSignal(int, str)
-    started = pyqtSignal()
-    finishedSignal = pyqtSignal()
-
-    def __init__(self):
-        super().__init__()
-        self._observers = []
-
+class UpdateProgressObservable(AbstractUpdateProgressObservable):
     def finished(self):
-        self.finishedSignal.emit()  # emit signal
         for observer in self._observers:
             observer.onFinished()
 
     def start(self):
-        self.started.emit()  # emit signal
         for observer in self._observers:
             observer.onStart()
 
-    def updateProgress(self, progress, title=""):
-        self.progressChanged.emit(progress, title)  # emit signal
+    def updateProgress(self, progress, title):
         for observer in self._observers:
             observer.onProgressUpdate(progress, title)
-
