@@ -122,6 +122,7 @@ class NmapImporter(QtCore.QThread):
                     QtWidgets.QApplication.processEvents()
 
             self.updateProgressObservable.updateProgress(int(createOsNodesProgress), 'Creating Service, Port and OS children...')
+            QtWidgets.QApplication.processEvents()
 
             for h in allHosts:  # create all OS, service and port objects that need to be created
                 self.tsLog("Processing h {ip}".format(ip=h.ip))
@@ -153,6 +154,9 @@ class NmapImporter(QtCore.QThread):
                 self.updateProgressObservable.updateProgress(int(createOsNodesProgress), 'Creating Service, Port and OS children...')
 
                 self.updateProgressObservable.updateProgress(int(createPortsProgress), 'Processing ports...')
+                if int(createOsNodesProgress) % 5 == 0:
+                    QtWidgets.QApplication.processEvents()
+
 
                 all_ports = h.all_ports()
                 portCount = len(all_ports)
