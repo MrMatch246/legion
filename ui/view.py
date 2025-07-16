@@ -1096,8 +1096,8 @@ class View(QtCore.QObject):
         self.ui.HostsTableView.horizontalHeader().resizeSection(1, 30)
         self.HostsTableModel.sort(3, Qt.SortOrder.DescendingOrder)
 
-        self.ui.HostsTableView.repaint()
-        self.ui.HostsTableView.update()
+        #self.ui.HostsTableView.repaint()
+        #self.ui.HostsTableView.update()
 
         ips = []   # ensure that there is always something selected
         for row in range(self.HostsTableModel.rowCount("")):
@@ -1152,8 +1152,8 @@ class View(QtCore.QObject):
                                                    showProcesses = 'noNmap',
                                                    sort = self.toolsTableViewSort,
                                                    ncol = self.toolsTableViewSortColumn))
-            self.ui.ToolsTableView.repaint()
-            self.ui.ToolsTableView.update()
+            #self.ui.ToolsTableView.repaint()
+            #self.ui.ToolsTableView.update()
 
             self.viewState.lazy_update_tools = False  # to indicate that it doesn't need to be updated anymore
 
@@ -1262,8 +1262,8 @@ class View(QtCore.QObject):
             self.ui.ScriptsTableView.selectRow(row)
             self.scriptTableClick()
 
-        self.ui.ScriptsTableView.repaint()
-        self.ui.ScriptsTableView.update()
+        #self.ui.ScriptsTableView.repaint()
+        #self.ui.ScriptsTableView.update()
 
     def updateCvesByHostView(self, hostIP):
         headers = ["CVE Id", "CVSS Score", "Product", "Version", "CVE URL", "Source", "ExploitDb ID", "ExploitDb",
@@ -1276,8 +1276,8 @@ class View(QtCore.QObject):
         self.ui.CvesTableView.horizontalHeader().resizeSection(4,225)
 
         self.ui.CvesTableView.setModel(self.CvesTableModel)
-        self.ui.CvesTableView.repaint()
-        self.ui.CvesTableView.update()
+        #self.ui.CvesTableView.repaint()
+        #self.ui.CvesTableView.update()
 
     def updateScriptsOutputView(self, scriptId):
         self.ui.ScriptsOutputTextEdit.clear()
@@ -1392,8 +1392,8 @@ class View(QtCore.QObject):
             self.controller.getProcessesFromDB(self.viewState.filters, showProcesses = True,
                                                sort = self.processesTableViewSort,
                                                ncol = self.processesTableViewSortColumn))
-        self.ui.ProcessesTableView.repaint()
-        self.ui.ProcessesTableView.update()
+        #self.ui.ProcessesTableView.repaint()
+        #self.ui.ProcessesTableView.update()
 
         # load the column widths from settings to persist widths between sessions
         columnWidths = self.controller.getSettings().gui_process_tab_column_widths.split(',')
