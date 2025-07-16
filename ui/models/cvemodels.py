@@ -63,8 +63,10 @@ class CvesTableModel(QtCore.QAbstractTableModel):
         if role == QtCore.Qt.ItemDataRole.DisplayRole or role == QtCore.Qt.ItemDataRole.EditRole:  # how to display each cell
             row = index.row()
             column = index.column()
+            print(index)
             print(column)
             print(self.columnMapping)
+            print(self.__cves)
             return self.__cves[row][self.columnMapping[column]]
 
     def sort(self, Ncol, order):
