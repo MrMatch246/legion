@@ -50,11 +50,15 @@ class ProgressWidget(QtWidgets.QDialog):
         self.setLayout(vbox)
 
     def setProgress(self, progress):
-        print(progress)
-        if progress > 100:
-            progress = 100
-        if self.progressBar.value() != int(progress):
-            self.progressBar.setValue(int(progress))
+        # Clamp
+        progress = max(0, min(progress, 100))
+
+        # Round to nearest integer to prevent spamming progress bar
+        progress = int(round(progress))
+
+        if self.progressBar.value() != progress:
+            print(progress)
+            self.progressBar.setValue(progress)
 
 
     def setText(self, text):
