@@ -33,7 +33,6 @@ class QtUpdateProgressObserver(AbstractUpdateProgressObserver):
         QTimer.singleShot(0, self.progressWidget.hide)
 
     def onProgressUpdate(self, progress: int, title: str) -> None:
-        print(progress)
         QTimer.singleShot(0, lambda: self.progressWidget.setText(title))
         QTimer.singleShot(0, lambda: self.progressWidget.setProgress(progress))
         QTimer.singleShot(0, self.progressWidget.show)

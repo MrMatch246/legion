@@ -17,7 +17,7 @@ Author(s): Shane Scott (sscott@shanewilliamscott.com), Dmitriy Dubson (d.dubson@
 """
 import sys
 
-from PyQt6 import QtCore
+from PyQt6 import QtCore, QtWidgets
 
 from app.actions.updateProgress import AbstractUpdateProgressObservable
 from app.logging.legionLog import getAppLogger
@@ -118,6 +118,7 @@ class NmapImporter(QtCore.QThread):
 
                 createProgress = createProgress + (100.0 / hostCount)
                 self.updateProgressObservable.updateProgress(int(createProgress), 'Adding hosts...')
+                QtWidgets.QApplication.processEvents()
 
             self.updateProgressObservable.updateProgress(int(createOsNodesProgress), 'Creating Service, Port and OS children...')
 
