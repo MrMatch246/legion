@@ -15,6 +15,8 @@ Copyright (c) 2024 Shane Scott
 
 Author(s): Shane Scott (sscott@shanewilliamscott.com), Dmitriy Dubson (d.dubson@gmail.com)
 """
+from PyQt6 import QtCore
+
 from app.actions.updateProgress.AbstractUpdateProgressObserver import AbstractUpdateProgressObserver
 from ui.ancillaryDialog import ProgressWidget
 
