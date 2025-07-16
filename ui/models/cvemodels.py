@@ -67,7 +67,7 @@ class CvesTableModel(QtCore.QAbstractTableModel):
             print(column)
             print(self.columnMapping)
             print(self.__cves)
-            return self.__cves[row][self.columnMapping[column]]
+            return self.__cves[row][column]
 
     def sort(self, Ncol, order):
         self.layoutAboutToBeChanged.emit()
