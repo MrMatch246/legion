@@ -28,7 +28,7 @@ class ScriptRepository:
         query = text("SELECT host.id, host.scriptId, port.portId, port.protocol FROM l1ScriptObj AS host "
                      "INNER JOIN hostObj AS hosts ON hosts.id = host.hostId "
                      "LEFT OUTER JOIN portObj AS port ON port.id = host.portId WHERE hosts.ip=:hostIP")
-        result = session.execute(query, {'hostIP': str(hostIP)}).fetchall()
+        result = session.execute(query, {'hostIP': str(hostIP)}).mappings().all()
         session.close()
         return result
 
