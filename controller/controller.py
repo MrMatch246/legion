@@ -85,10 +85,7 @@ class Controller:
         self.nmapImporter.done.connect(self.view.updateProcessesTableView)
         self.nmapImporter.schedule.connect(self.scheduler)              # run automated attacks
         self.nmapImporter.log.connect(self.view.ui.LogOutputTextView.append)
-        self.nmapImporter.tick.connect(self.safeProcessEvents)
-
-    def safeProcessEvents(self, _):
-        QtWidgets.QApplication.processEvents()
+        self.nmapImporter.tick.connect(self.view.importProgressWidget.setProgress, QtCore.Qt.ConnectionType.QueuedConnection)
 
     def initPythonImporter(self):
         self.pythonImporter = PythonImporter()

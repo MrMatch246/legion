@@ -34,6 +34,8 @@ def flipState(targetState, widgetsToFlipOn, widgetsToFlipOff):
 class ProgressWidget(QtWidgets.QDialog):
     def __init__(self, text, parent=None):
         QtWidgets.QDialog.__init__(self, parent)
+        self.label = None
+        self.progressBar = None
         self.text = text
         self.setWindowTitle(text)
         self.setupLayout()
