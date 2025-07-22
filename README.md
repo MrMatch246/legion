@@ -137,7 +137,7 @@ Replace `X.X.X.X` with the IP address of the remote running X11.
 Within Terminal:
 
 ```shell
-git clone https://github.com/Hackman238/legion.git
+git clone https://github.com/MrMatch246/legion.git
 cd legion/docker
 chmod +x runIt.sh
 ./runIt.sh X.X.X.X
@@ -160,7 +160,7 @@ log and see IP next to "XdmcpRegisterConnection: newAddress"
 Within Terminal:
 
 ```shell
-git clone https://github.com/Hackman238/legion.git
+git clone https://github.com/MrMatch246/legion.git
 cd legion/docker
 sudo chmod +x runIt.sh
 sudo ./runIt.sh X.X.X.X
@@ -259,7 +259,7 @@ Assumes Ubuntu, Kali or Parrot Linux is being used with **Python 3.6** installed
 Within Terminal:
 
 ```shell
-git clone https://github.com/Hackman238/legion.git
+git clone https://github.com/MrMatch246/legion.git
 cd legion
 sudo chmod +x startLegion.sh
 sudo ./startLegion.sh
