@@ -122,7 +122,7 @@ and granting Docker group SSH rights [here](#setup-docker-to-allow-non-root-user
 Within Terminal:
 
 ```shell
-git clone https://github.com/Hackman238/legion.git
+git clone https://github.com/MrMatch246/legion.git
 cd legion/docker
 chmod +x runIt.sh
 ./runIt.sh
