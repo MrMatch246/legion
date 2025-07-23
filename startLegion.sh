@@ -31,18 +31,18 @@ then
 
     # Install dependancies from package manager
     echo "Installing Packages from APT..."
-    "$REPO_DIR/deps/deps/installDeps.sh"
+    "$REPO_DIR/deps/installDeps.sh"
 
     # Install python dependancies
     echo "Installing Python Libraries..."
-    "$REPO_DIR/deps/deps/installPythonLibs.sh"
+    "$REPO_DIR/deps/installPythonLibs.sh"
 
     # Patch Qt
     echo "Stripping some ABIs from Qt libraries..."
-    "$REPO_DIR/deps/deps/fixQt.sh"
+    "$REPO_DIR/deps/fixQt.sh"
 
     # Determine if additional Sparta scripts are installed
-    bash "$REPO_DIR/deps/deps/detectScripts.sh"
+    bash "$REPO_DIR/deps/detectScripts.sh"
 
     touch "$REPO_DIR/.initialized"
     rm "$REPO_DIR/.justcloned" -f
